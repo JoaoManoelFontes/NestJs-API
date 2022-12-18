@@ -4,12 +4,14 @@ import { IsNotEmpty, IsUUID, Length } from 'class-validator';
 export class CreateNotificationBody {
   @IsNotEmpty() // ? Decorators para validação de dados
   @IsUUID()
-  userId: string;
+  userId!: string;
 
   @IsNotEmpty()
   @Length(5, 240)
-  content: string;
+  content!: string;
 
   @IsNotEmpty()
-  tag: string;
+  tag!: string;
+
+  readAt?: Date | null;
 }

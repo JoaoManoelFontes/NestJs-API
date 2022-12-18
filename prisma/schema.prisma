@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Notification{
-  id        String @id
-  userId    String 
-  content   String
-  tag       String
-  readAt    DateTime?
-  createdAt DateTime @default(now())
+  id         String @id
+  userId     String 
+  content    String
+  tag        String
+  readAt     DateTime?
+  canceledAt DateTime?
+  createdAt  DateTime @default(now())
 
   @@index([userId])
 }
