@@ -8,7 +8,11 @@ Não é usada em nenhum controller, por isso é abstrata
 @Injectable()
 export class PrismaClientService extends PrismaClient implements OnModuleInit {
   // ? Criando service pra conectar com o prisma ORM
-
+  constructor() {
+    super({
+      log: ['query'],
+    });
+  }
   // Funções genéricas - Quando se conectar & se o banco de dados se disconectar inesperadamente
   async onModuleInit() {
     await this.$connect();

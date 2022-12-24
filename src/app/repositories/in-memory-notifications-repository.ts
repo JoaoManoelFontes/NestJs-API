@@ -1,4 +1,5 @@
 import { Notification } from '../entities/notification';
+import { NotificationNotFound } from '../errors/notification-error';
 import { NotificationsRepository } from './notification-repository';
 
 export class InMemoryNotificationRespository
@@ -6,30 +7,40 @@ export class InMemoryNotificationRespository
 {
   public notifications: Notification[] = [];
 
-  async findById(notificationId: string): Promise<Notification | null> {
-    const notification = this.notifications.find(
-      (item) => item.getId() === notificationId,
-    );
-
-    if (!notification) return null;
-
-    return notification;
-  }
-
   async create(notification: Notification) {
     this.notifications.push(notification);
   }
 
-  async save(notification: Notification): Promise<void> {
+  async update(notification: Notification): Promise<void> {
     const notificationId = this.notifications.findIndex(
       (item) => item.getId() === notification.getId(),
     );
 
     if (notificationId < 0) {
-      this.notifications.push(notification);
+      throw new NotificationNotFound();
     } else {
       this.notifications[notificationId] = notification;
     }
-    console.log(this.notifications[notificationId]);
+  }
+
+  async findById(notificationId: string): Promise<Notification | null> {
+    const notification = this.notifications.find(
+      (e) => e.getId() === notificationId,
+    );
+
+    if (!notification) {
+      return null;
+    }
+
+    return notification;
+  }
+
+  async findManyByUserId(userId: string): Promise<Notification[]> {
+    const notificationList = this.notifications.filter(
+      (e) => e.getUserId() === userId,
+    );
+    console.log('id: ' + userId);
+
+    return notificationList;
   }
 }

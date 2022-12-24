@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { NotificationNotFound } from 'src/app/errors/notification-error';
 import { Notification } from '../../../../app/entities/notification';
 import { NotificationsRepository } from '../../../../app/repositories/notification-repository';
 import { NotificationMapper } from '../mappers/notification-mapper';
@@ -8,10 +9,6 @@ import { PrismaClientService } from '../services/prisma-client.service';
 export class PrismaNotificationRepository implements NotificationsRepository {
   constructor(private prismaService: PrismaClientService) {}
 
-  async findById(notificationId: string): Promise<Notification | null> {
-    throw new Error('Method not implemented.');
-  }
-
   async create(notification: Notification): Promise<void> {
     const rawData = NotificationMapper.toPrisma(notification);
 
@@ -19,7 +16,39 @@ export class PrismaNotificationRepository implements NotificationsRepository {
       data: rawData,
     });
   }
-  async save(notification: Notification): Promise<void> {
-    throw new Error('Method not implemented.');
+  async update(notification: Notification): Promise<void> {
+    const rawData = NotificationMapper.toPrisma(notification);
+
+    await this.prismaService.notification.update({
+      where: {
+        id: rawData.id,
+      },
+      data: rawData,
+    });
+  }
+
+  async findById(notificationId: string): Promise<Notification | null> {
+    const notification = await this.prismaService.notification.findUnique({
+      where: { id: notificationId },
+    });
+    if (!notification) {
+      throw new NotificationNotFound();
+    }
+
+    return NotificationMapper.toDomain(notification);
+  }
+
+  async findManyByUserId(userId: string): Promise<Notification[]> {
+    const notifications = await this.prismaService.notification.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    if (notifications.length == 0) {
+      throw new NotificationNotFound();
+    }
+
+    return notifications.map(NotificationMapper.toDomain);
   }
 }

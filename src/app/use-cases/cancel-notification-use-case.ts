@@ -1,13 +1,8 @@
 import { NotificationsRepository } from '../repositories/notification-repository';
 import { Notification } from '../entities/notification';
 import { Injectable } from '@nestjs/common';
+import { NotificationNotFound } from '../errors/notification-error';
 // Use-case para enviar notificação - use cases representam os processos e serviços de uma aplicação
-
-interface CancelNotificationRequest {
-  notification: Notification;
-} // ? interface para receber os dados e enviar uma nova notificação
-
-type CancelNotificationResponse = void; // ? interface para retornar a response (pode ser adicionado outros objetos na interface sem alterar o tipo do retorno da função)
 
 @Injectable()
 export class CancelNotification {
@@ -15,9 +10,16 @@ export class CancelNotification {
 
   async execute(
     // ? Método que cria um novo objeto da classe notificação
-    notification: Notification,
-  ): Promise<CancelNotificationResponse> {
+    notificationId: string,
+  ): Promise<void> {
+    const notification = await this.notificationsRepository.findById(
+      notificationId,
+    );
+
+    if (!notification) {
+      throw new NotificationNotFound();
+    }
     notification.setCanceledAt();
-    await this.notificationsRepository.save(notification);
+    await this.notificationsRepository.update(notification);
   }
 }

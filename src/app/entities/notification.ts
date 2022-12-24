@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { NotificationNotFound } from '../errors/notification-error';
 
 // ? Definindo a interface que vai ser usada na nossa classe
 export interface NotificationProps {
@@ -23,12 +24,12 @@ export class Notification {
 
   // construtor
   constructor(props: NotificationProps) {
+    this._id = randomUUID();
     // ? se o content não passar no método de validação de tamanho, irá dar erro
 
-    this._id = randomUUID();
     const isContentLengthValid = this.validateContentLength(props.content);
     if (!isContentLengthValid) {
-      throw new Error('Content length error!');
+      throw new NotificationNotFound();
     }
 
     this.props = {
@@ -58,7 +59,7 @@ export class Notification {
   public setContent(content: string) {
     const isContentLengthValid = this.validateContentLength(content);
     if (!isContentLengthValid) {
-      throw new Error('Content length error!');
+      throw new NotificationNotFound();
     }
     this.props.content = content;
   }
