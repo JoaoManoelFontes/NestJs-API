@@ -16,6 +16,7 @@ export class PrismaNotificationRepository implements NotificationsRepository {
       data: rawData,
     });
   }
+
   async update(notification: Notification): Promise<void> {
     const rawData = NotificationMapper.toPrisma(notification);
 
@@ -27,7 +28,8 @@ export class PrismaNotificationRepository implements NotificationsRepository {
     });
   }
 
-  async findById(notificationId: string): Promise<Notification | null> {
+  async findById(notificationId: string): Promise<Notification> {
+    console.log(notificationId);
     const notification = await this.prismaService.notification.findUnique({
       where: { id: notificationId },
     });
@@ -44,10 +46,6 @@ export class PrismaNotificationRepository implements NotificationsRepository {
         userId,
       },
     });
-
-    if (notifications.length == 0) {
-      throw new NotificationNotFound();
-    }
 
     return notifications.map(NotificationMapper.toDomain);
   }

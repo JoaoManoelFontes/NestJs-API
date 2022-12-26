@@ -23,8 +23,8 @@ export class Notification {
   }
 
   // construtor
-  constructor(props: NotificationProps) {
-    this._id = randomUUID();
+  constructor(props: NotificationProps, id?: string) {
+    this._id = id ?? randomUUID();
     // ? se o content não passar no método de validação de tamanho, irá dar erro
 
     const isContentLengthValid = this.validateContentLength(props.content);
@@ -84,8 +84,8 @@ export class Notification {
     return this.props.canceledAt;
   }
 
-  public setReadAt(readAt: Date | null | undefined) {
-    this.props.readAt = readAt;
+  public setReadAt() {
+    this.props.readAt = new Date();
   }
 
   public getCreatedAt(): Date | null | undefined {

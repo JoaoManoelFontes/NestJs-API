@@ -23,13 +23,13 @@ export class InMemoryNotificationRespository
     }
   }
 
-  async findById(notificationId: string): Promise<Notification | null> {
+  async findById(notificationId: string): Promise<Notification> {
     const notification = this.notifications.find(
       (e) => e.getId() === notificationId,
     );
 
     if (!notification) {
-      return null;
+      throw new NotificationNotFound();
     }
 
     return notification;

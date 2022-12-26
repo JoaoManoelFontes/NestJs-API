@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { Notification } from '../entities/notification';
 import { NotificationsRepository } from '../repositories/notification-repository';
 
+@Injectable()
 export class GetUserNotificationById {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
@@ -8,6 +10,7 @@ export class GetUserNotificationById {
     const notifications = await this.notificationsRepository.findManyByUserId(
       userId,
     );
+
     return notifications;
   }
 }
