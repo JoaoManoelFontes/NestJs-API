@@ -2,8 +2,10 @@ import { makeNotification } from '../factories/make-notifications-factory';
 import { InMemoryNotificationRespository } from '../repositories/in-memory-notifications-repository';
 import { GetUserNotificationById } from './get-user-notification-by-id-use-case';
 
-describe('Get user notifications by userId', () => {
-  it('should be able to return a list of my userID notifications', async () => {
+//Testes para o use-case de pegar as notificações pelo userId
+
+describe('Get notifications by userId', () => {
+  it('should be able to return a list of my userId notifications', async () => {
     const notificationsRepository = new InMemoryNotificationRespository();
     const getUserNotificationById = new GetUserNotificationById(
       notificationsRepository,

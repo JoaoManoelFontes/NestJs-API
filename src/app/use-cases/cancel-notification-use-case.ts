@@ -1,7 +1,8 @@
 import { NotificationsRepository } from '../repositories/notification-repository';
 import { Notification } from '../entities/notification';
 import { Injectable } from '@nestjs/common';
-// Use-case para enviar notificação - use cases representam os processos e serviços de uma aplicação
+
+// use case para cancelar uma notificação
 
 @Injectable()
 export class CancelNotification {

@@ -2,6 +2,7 @@ import { Notification } from '../entities/notification';
 import { NotificationNotFound } from '../errors/notification-error';
 import { NotificationsRepository } from './notification-repository';
 
+// Simulando um banco de dados para os testes dos use-cases
 export class InMemoryNotificationRespository
   implements NotificationsRepository
 {

@@ -2,6 +2,8 @@ import { NotificationsRepository } from '../repositories/notification-repository
 import { Notification } from '../entities/notification';
 import { Injectable } from '@nestjs/common';
 
+// use-case para visualizar uma notificação
+
 @Injectable()
 export class ReadNotification {
   constructor(private notificationsRepository: NotificationsRepository) {}

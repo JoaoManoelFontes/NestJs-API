@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { CreateNotificationBody } from '../dtos/create-notification-body';
 import { SendNotification } from '../../../app/use-cases/send-notification-use-case';
 import { Param } from '@nestjs/common/decorators';
@@ -9,7 +9,8 @@ import { CancelNotification } from '../../../app/use-cases/cancel-notification-u
 import { ReadNotification } from '../../../app/use-cases/read-notification-use-case';
 import { PrismaNotificationRepository } from '../../database/prisma/repositories/prisma-notification-repository';
 
-// Controllers - criando as rotas e endpoints da api
+// Controller - criando as rotas e endpoints da api
+
 @Controller('notifications')
 export class NotificationController {
   constructor(
@@ -25,14 +26,31 @@ export class NotificationController {
   // ? Definir o tipo de método http e o endpoint
   @Post()
   async create(@Body() { userId, content, tag }: CreateNotificationBody) {
-    const { notification } = await this.sendNotification.execute({
+    const notification = await this.sendNotification.execute({
       userId,
       content,
       tag,
     });
 
-    return { notification };
+    return NotificationViewModel.toHTTP(notification);
     // ? Pegando o corpo da requisição e definindo o tipo dela
+  }
+
+  @Put(':notificationId')
+  async update(
+    @Param('notificationId') notificationId: string,
+    @Body() { userId, content, tag }: CreateNotificationBody,
+  ): Promise<void> {
+    const notification = new Notification(
+      {
+        userId,
+        content,
+        tag,
+      },
+      notificationId,
+    );
+
+    await this.prismaNotificationsRepository.update(notification);
   }
 
   @Get('users/:userId/')

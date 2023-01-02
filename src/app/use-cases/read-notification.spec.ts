@@ -3,6 +3,8 @@ import { InMemoryNotificationRespository } from '../repositories/in-memory-notif
 import { makeNotification } from '../factories/make-notifications-factory';
 import { ReadNotification } from './read-notification-use-case';
 
+//Testes para o use-case de ler notificação
+
 describe('read notification use case', () => {
   it('should be able to create a notification object and then read it ', async () => {
     const notificationsRepository = new InMemoryNotificationRespository();
@@ -10,7 +12,7 @@ describe('read notification use case', () => {
     const readNotification = new ReadNotification(notificationsRepository);
     const sendNotification = new SendNotification(notificationsRepository);
 
-    const { notification } = await sendNotification.execute({
+    const notification = await sendNotification.execute({
       userId: '123456',
       content: 'content',
       tag: 'tag',

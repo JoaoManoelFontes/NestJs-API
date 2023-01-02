@@ -8,6 +8,8 @@ import { NotificationController } from './controllers/notification.controller';
 import { PrismaNotificationRepository } from '../database/prisma/repositories/prisma-notification-repository';
 import { PrismaClientService } from '../database/prisma/services/prisma-client.service';
 
+// Module de http
+
 @Module({
   imports: [DatabaseModule],
   controllers: [NotificationController],

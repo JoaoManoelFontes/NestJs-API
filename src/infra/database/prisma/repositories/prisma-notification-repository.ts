@@ -5,6 +5,8 @@ import { NotificationsRepository } from '../../../../app/repositories/notificati
 import { NotificationMapper } from '../mappers/notification-mapper';
 import { PrismaClientService } from '../services/prisma-client.service';
 
+// Fazendo as querys com o banco de dados prisma
+
 @Injectable()
 export class PrismaNotificationRepository implements NotificationsRepository {
   constructor(private prismaService: PrismaClientService) {}

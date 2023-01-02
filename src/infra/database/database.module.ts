@@ -3,6 +3,8 @@ import { NotificationsRepository } from '../../app/repositories/notification-rep
 import { PrismaNotificationRepository } from './prisma/repositories/prisma-notification-repository';
 import { PrismaClientService } from './prisma/services/prisma-client.service';
 
+// Module para os services do banco de dados
+
 @Module({
   providers: [
     PrismaClientService,

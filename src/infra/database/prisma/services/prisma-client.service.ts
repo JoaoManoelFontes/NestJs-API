@@ -2,7 +2,6 @@ import { Injectable, OnModuleInit, INestApplication } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 /*
 Service usada para se conectar com o banco de dados pelo prisma
-Não é usada em nenhum controller, por isso é abstrata
 */
 
 @Injectable()

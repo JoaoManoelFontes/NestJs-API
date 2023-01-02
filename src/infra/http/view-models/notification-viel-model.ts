@@ -1,5 +1,7 @@
 import { Notification } from '../../../app/entities/notification';
 
+// Organizando as informações antes de enviar na api
+
 export class NotificationViewModel {
   static toHTTP(notification: Notification) {
     const response = {
