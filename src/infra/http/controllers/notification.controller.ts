@@ -21,7 +21,7 @@ export class NotificationController {
     private prismaNotificationsRepository: PrismaNotificationRepository,
   ) {}
 
-  // ? Importando os services que serão usados, e que já foram importados no module
+  // ? Importando os services que serão usados e que já foram importados no module
 
   // ? Definir o tipo de método http e o endpoint
   @Post()
