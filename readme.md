@@ -37,9 +37,9 @@ $ docker-compose up -d
 * Run the migrations
 
 ```bash
-$ npm run prisma:migrate dev
+$ npm run prisma:migrate:dev
 or
-$ yarn prisma:migrate dev
+$ yarn prisma:migrate:dev
 ```
 
 * Run the application
