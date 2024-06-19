@@ -1,6 +1,14 @@
 version: '3.7'
 
 services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:docker@db:5432/nestjs_db?schema=sample
   db:
     image: postgres:11.5-alpine
     ports:
