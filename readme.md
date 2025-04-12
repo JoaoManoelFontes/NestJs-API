@@ -50,4 +50,4 @@ or
 $ yarn start
 ```
 
-* access the application at <http://localhost:3000> [http://localhost:3000]
+* access the application at <http://localhost:3000>
