@@ -5,10 +5,16 @@ services:
     build: .
     ports:
       - "3000:3000"
-    depends_on:
-      - db
     environment:
       DATABASE_URL: postgresql://postgres:docker@db:5432/nestjs_db?schema=sample
+    depends_on:
+      - db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   db:
     image: postgres:11.5-alpine
     ports:
@@ -19,6 +25,17 @@ services:
       POSTGRES_DB: nestjs_db
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/server.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
 
 volumes:
   postgres-data:
